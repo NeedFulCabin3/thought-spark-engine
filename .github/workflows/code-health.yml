@@ -1,0 +1,27 @@
+name: Code Health Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Validate HTML Markup
+        uses: CyberspaceNinja/html-validator-action@v1
+        with:
+          files: 'index.html'
+
+      - name: Check Syntax Integrity
+        run: |
+          echo "Verifying file integrity..."
+          test -f index.html
+          test -f style.css
+          test -f script.js
+          echo "All necessary web assets are present."
